@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter.constants import ANCHOR, CENTER
+from tkinter.ttk import Notebook
 
 MAIN_HEIGHT = 600
 MAIN_WIDTH = 1000
@@ -20,20 +20,39 @@ class MainApplication(tk.Frame):
 
         ## Name label
         self.char_name_lab = tk.Label(self.char_frame, text="<character name here>")
-        self.char_name_lab.place(relx = 0.5, y = 12, anchor=tk.CENTER)
+        self.char_name_lab.place(relx = 0.5, y = 17, anchor=tk.CENTER)
         
-        ## 
+        ## Img frame
+        self.char_img_frame = tk.Frame(self.char_frame, bg = "White")
+        self.char_img_frame.config(relief='groove',borderwidth="2")
+        self.char_img_frame.place(rely = 0.43, relx=0.5,anchor=tk.CENTER, width=MAIN_WIDTH*0.43, height=MAIN_WIDTH*0.43)
 
-        """
-        # Right top frame - randomness center
-        self.rand_frame = tk.Frame(self.main_frame, bg="Yellow")
-        self.rand_frame.grid(column=2, row = 1)
+        ## Stats frame
+        self.char_stats_frame = tk.Frame(self.char_frame, bg = "Blue")
+        self.char_stats_frame.config(relief='groove',borderwidth="2")
+        self.char_stats_frame.place(rely = 0.899, relx=0.5, anchor=tk.CENTER,width=MAIN_WIDTH*0.43, height=115)
 
-        # Right bottom frame - equipment (i guess)
-        self.eq_frame = tk.Frame(self.main_frame, bg="Blue")
-        self.eq_frame.grid(column=2, row = 2)
-        """
+        # Top right frame - randomness center
+        self.rand_frame = tk.Frame(self.main_frame, bg = "Yellow")
+        self.rand_frame.config(relief='groove',borderwidth="2")
+        self.rand_frame.place(relx = 1, rely = 0, anchor=tk.NE, width=MAIN_WIDTH*0.5535, height=MAIN_HEIGHT*0.5)
+
+        # Bottom right frame - equipment
+        self.eq_frame = tk.Frame(self.main_frame, bg = "Orange")
+        self.eq_frame.config(relief='groove',borderwidth="2")
+        self.eq_frame.place(relx = 1, rely = 1, anchor=tk.SE, width=MAIN_WIDTH*0.5535, height=MAIN_HEIGHT*0.475)
+
+        ## Equipment notebook for reasons?
+        self.eq_notebook = Notebook(self.eq_frame)
+        self.eq_page1 = tk.Frame(self.eq_notebook)
+        self.eq_text = tk.Text(self.eq_page1, width=67, height= 15, wrap=tk.WORD)
+        self.eq_text.pack()
+        self.eq_page2 = tk.Frame(self.eq_notebook)
+        self.eq_notebook.add(self.eq_page1, text = "Page 1")
+        self.eq_notebook.add(self.eq_page2, text = "Page 2")
         
+        self.eq_notebook.place(relx=0.5,rely= 0.5, anchor=tk.CENTER)
+
 
 if __name__ == "__main__":
     root = tk.Tk()
