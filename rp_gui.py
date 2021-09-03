@@ -27,15 +27,24 @@ class MainApplication(tk.Frame):
         self.char_img_frame.config(relief='groove',borderwidth="2")
         self.char_img_frame.place(rely = 0.43, relx=0.5,anchor=tk.CENTER, width=MAIN_WIDTH*0.43, height=MAIN_WIDTH*0.43)
 
+        self.img_label = tk.Label(self.char_img_frame, text= "<char img here>")
+        self.img_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
+
         ## Stats frame
         self.char_stats_frame = tk.Frame(self.char_frame, bg = "Blue")
         self.char_stats_frame.config(relief='groove',borderwidth="2")
         self.char_stats_frame.place(rely = 0.899, relx=0.5, anchor=tk.CENTER,width=MAIN_WIDTH*0.43, height=115)
 
+        self.stats_label = tk.Label(self.char_stats_frame, text= "<stats table here>")
+        self.stats_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
+
         # Top right frame - randomness center
         self.rand_frame = tk.Frame(self.main_frame, bg = "Yellow")
         self.rand_frame.config(relief='groove',borderwidth="2")
         self.rand_frame.place(relx = 1, rely = 0, anchor=tk.NE, width=MAIN_WIDTH*0.5535, height=MAIN_HEIGHT*0.5)
+
+        self.rand_label = tk.Label(self.rand_frame, text= "<dice table here>")
+        self.rand_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
 
         # Bottom right frame - equipment
         self.eq_frame = tk.Frame(self.main_frame, bg = "Orange")
