@@ -1,8 +1,22 @@
 import tkinter as tk
 from tkinter.ttk import Notebook
+from PIL import Image, ImageTk
 
-MAIN_HEIGHT = 600
-MAIN_WIDTH = 1000
+# CONSTANTS
+MAIN_WIN_HEIGHT = 600
+MAIN_WIN_WIDTH = 1000
+
+CHAR_IMG_SIZE = 420
+
+
+def rnrImage(path: str) -> ImageTk.PhotoImage:
+    """Read and Resize Image from path"""
+    img = Image.open(path)
+    width, height = img.size
+    if max(width,height) > CHAR_IMG_SIZE:
+        ratio = min(CHAR_IMG_SIZE/width, CHAR_IMG_SIZE/height)
+        img = img.resize((round(width*ratio),round(height*ratio)),Image.ANTIALIAS)
+    return ImageTk.PhotoImage(img)
 
 class MainApplication(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -10,13 +24,13 @@ class MainApplication(tk.Frame):
         self.parent = parent
 
         # Main container frame
-        self.main_frame = tk.Frame(parent, bg="Red", width=MAIN_WIDTH, height=MAIN_HEIGHT)
+        self.main_frame = tk.Frame(parent, bg="Red", width=MAIN_WIN_WIDTH, height=MAIN_WIN_HEIGHT)
         self.main_frame.config(relief='groove',borderwidth="3")
         self.main_frame.pack(padx = 5, pady = 5, anchor=tk.W, fill=tk.BOTH, expand = True)
 
         # Left frame - character img and stats
         self.char_frame = tk.Frame(self.main_frame, bg="Green")
-        self.char_frame.place(x = 0, y = 0, anchor=tk.NW, width=MAIN_WIDTH*0.43, height=MAIN_HEIGHT-17)
+        self.char_frame.place(x = 0, y = 0, anchor=tk.NW, width=MAIN_WIN_WIDTH*0.43, height=MAIN_WIN_HEIGHT-17)
 
         ## Name label
         self.char_name_lab = tk.Label(self.char_frame, text="<character name here>")
@@ -25,15 +39,18 @@ class MainApplication(tk.Frame):
         ## Img frame
         self.char_img_frame = tk.Frame(self.char_frame, bg = "White")
         self.char_img_frame.config(relief='groove',borderwidth="2")
-        self.char_img_frame.place(rely = 0.43, relx=0.5,anchor=tk.CENTER, width=MAIN_WIDTH*0.43, height=MAIN_WIDTH*0.43)
+        self.char_img_frame.place(rely = 0.43, relx=0.5,anchor=tk.CENTER, width=MAIN_WIN_WIDTH*0.43, height=MAIN_WIN_WIDTH*0.43)
 
-        self.img_label = tk.Label(self.char_img_frame, text= "<char img here>")
+        ### Temporary image
+        self.photo = rnrImage("cool_guy.png")
+        #self.img_label = tk.Label(self.char_img_frame, text= "<char img here>")
+        self.img_label = tk.Label(self.char_img_frame, image=self.photo)
         self.img_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
 
         ## Stats frame
         self.char_stats_frame = tk.Frame(self.char_frame, bg = "Blue")
         self.char_stats_frame.config(relief='groove',borderwidth="2")
-        self.char_stats_frame.place(rely = 0.899, relx=0.5, anchor=tk.CENTER,width=MAIN_WIDTH*0.43, height=115)
+        self.char_stats_frame.place(rely = 0.899, relx=0.5, anchor=tk.CENTER,width=MAIN_WIN_WIDTH*0.43, height=115)
 
         self.stats_label = tk.Label(self.char_stats_frame, text= "<stats table here>")
         self.stats_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
@@ -41,7 +58,7 @@ class MainApplication(tk.Frame):
         # Top right frame - randomness center
         self.rand_frame = tk.Frame(self.main_frame, bg = "Yellow")
         self.rand_frame.config(relief='groove',borderwidth="2")
-        self.rand_frame.place(relx = 1, rely = 0, anchor=tk.NE, width=MAIN_WIDTH*0.5535, height=MAIN_HEIGHT*0.5)
+        self.rand_frame.place(relx = 1, rely = 0, anchor=tk.NE, width=MAIN_WIN_WIDTH*0.5535, height=MAIN_WIN_HEIGHT*0.5)
 
         self.rand_label = tk.Label(self.rand_frame, text= "<dice table here>")
         self.rand_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
@@ -49,7 +66,7 @@ class MainApplication(tk.Frame):
         # Bottom right frame - equipment
         self.eq_frame = tk.Frame(self.main_frame, bg = "Orange")
         self.eq_frame.config(relief='groove',borderwidth="2")
-        self.eq_frame.place(relx = 1, rely = 1, anchor=tk.SE, width=MAIN_WIDTH*0.5535, height=MAIN_HEIGHT*0.475)
+        self.eq_frame.place(relx = 1, rely = 1, anchor=tk.SE, width=MAIN_WIN_WIDTH*0.5535, height=MAIN_WIN_HEIGHT*0.475)
 
         ## Equipment notebook for reasons?
         self.eq_notebook = Notebook(self.eq_frame)
@@ -67,6 +84,6 @@ if __name__ == "__main__":
     root = tk.Tk()
     MainApplication(root).pack(side="top", fill="both", expand=True)
     root.title("RP UI")
-    root.geometry(f"{MAIN_WIDTH}x{MAIN_HEIGHT}")
+    root.geometry(f"{MAIN_WIN_WIDTH}x{MAIN_WIN_HEIGHT}")
     root.resizable(False,False)
     root.mainloop()
