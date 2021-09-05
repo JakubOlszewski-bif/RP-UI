@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter.ttk import Notebook
+
 from PIL import Image, ImageTk
 
 # CONSTANTS
@@ -23,6 +24,24 @@ class MainApplication(tk.Frame):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
 
+        # Menu bar
+        self.menubar = tk.Menu(parent)
+
+        self.filemenu = tk.Menu(self.menubar, tearoff= 0)
+        self.filemenu.add_command(label = "New character")
+        self.filemenu.add_command(label = "Open character")
+        self.filemenu.add_command(label = "Save character")
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label = "Exit")
+        self.menubar.add_cascade(label = "File", menu = self.filemenu)
+
+        self.helpmenu = tk.Menu(self.menubar, tearoff=0)
+        self.helpmenu.add_command(label = "How to")
+        self.helpmenu.add_command(label = "About")
+        self.menubar.add_cascade(label = "Help", menu = self.helpmenu)
+
+        self.master.configure(menu = self.menubar)
+
         # Main container frame
         self.main_frame = tk.Frame(parent, bg="Red", width=MAIN_WIN_WIDTH, height=MAIN_WIN_HEIGHT)
         self.main_frame.config(relief='groove',borderwidth="3")
@@ -42,8 +61,10 @@ class MainApplication(tk.Frame):
         self.char_img_frame.place(rely = 0.43, relx=0.5,anchor=tk.CENTER, width=MAIN_WIN_WIDTH*0.43, height=MAIN_WIN_WIDTH*0.43)
 
         ### Temporary image
-        self.photo = rnrImage("cool_guy.png")
-        #self.img_label = tk.Label(self.char_img_frame, text= "<char img here>")
+        try:
+            self.photo = rnrImage("char_images/char_elff.png") 
+        except FileNotFoundError:
+            self.photo = rnrImage("char_images/cool_guy.png")
         self.img_label = tk.Label(self.char_img_frame, image=self.photo)
         self.img_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
 
