@@ -13,7 +13,7 @@ MAIN_WIN_WIDTH = 1000
 CHAR_IMG_SIZE = 420
 
 #tmp
-STAT_LIST = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
+STAT_LIST = ["Siła", "Zręczność", "Budowa", "Inteligencja", "Mądrość", "Charyzma"]
 STAT_VALS = [5,5,5,5,5,5]
 
 def rnrImage(path: str) -> ImageTk.PhotoImage:
@@ -34,12 +34,10 @@ class MainApplication(tk.Frame):
         self.menubar = tk.Menu(parent)
 
         self.filemenu = tk.Menu(self.menubar, tearoff= 0)
-        self.filemenu.add_command(label = "New character")
-        self.filemenu.add_command(label = "Open character")
-        self.filemenu.add_command(label = "Save character")
-        self.filemenu.add_separator()
-        self.filemenu.add_command(label = "Exit")
-        self.menubar.add_cascade(label = "File", menu = self.filemenu)
+        self.filemenu.add_command(label = "Stwórz")
+        self.filemenu.add_command(label = "Wczytaj")
+        self.filemenu.add_command(label = "Zapisz")
+        self.menubar.add_cascade(label = "Postać", menu = self.filemenu)
 
         self.helpmenu = tk.Menu(self.menubar, tearoff=0)
         self.helpmenu.add_command(label = "How to")
@@ -75,23 +73,19 @@ class MainApplication(tk.Frame):
         self.img_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
 
         ## Stats frame
-        self.char_stats_frame = tk.Frame(self.char_frame, bg = "Blue")
+        self.char_stats_frame = tk.Frame(self.char_frame)
         self.char_stats_frame.config(relief='groove',borderwidth="2")
         self.char_stats_frame.place(rely = 0.899, relx=0.5, anchor=tk.CENTER,width=MAIN_WIN_WIDTH*0.43, height=115)
         
         ### Stats table
-        cooridates = [(1,1),(2,1),(1,2),(2,2),(1,3),(2,3)]
+        self.table_container = tk.Frame(self.char_stats_frame)
+        cooridates = [(1,1),(2,1),(1,2),(2,2),(1,3),(2,3)] #lazy way, should change
         self.stat_wig_cont = []
         for stat_name,stat_val,xy in zip(STAT_LIST,STAT_VALS, cooridates):
-            w = stats_cell(self.char_stats_frame, stat_name, stat_val)
+            w = stats_cell(self.table_container, stat_name, stat_val)
             w.grid(row=xy[0], column=xy[1])
             self.stat_wig_cont.append(w)
-
-
-        """
-        self.stats_label = tk.Label(self.char_stats_frame, text= "<stats table here>")
-        self.stats_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
-        """
+        self.table_container.place(rely= 0.5, relx= 0.5, anchor=tk.CENTER)
 
         # Top right frame - randomness center
         self.rand_frame = tk.Frame(self.main_frame, bg = "Yellow")
