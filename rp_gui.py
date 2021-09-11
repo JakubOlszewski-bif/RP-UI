@@ -40,9 +40,9 @@ class MainApplication(tk.Frame):
         self.menubar.add_cascade(label = "Postać", menu = self.filemenu)
 
         self.helpmenu = tk.Menu(self.menubar, tearoff=0)
-        self.helpmenu.add_command(label = "How to")
-        self.helpmenu.add_command(label = "About")
-        self.menubar.add_cascade(label = "Help", menu = self.helpmenu)
+        self.helpmenu.add_command(label = "Instrukcja")
+        self.helpmenu.add_command(label = "O gui...")
+        self.menubar.add_cascade(label = "Pomoc", menu = self.helpmenu)
 
         self.master.configure(menu = self.menubar)
 
