@@ -68,7 +68,7 @@ class MainApplication(tk.Frame):
         try:
             self.photo = rnrImage("char_images/char_elfff.png") 
         except FileNotFoundError:
-            self.photo = rnrImage("char_images/cool_guy.png")
+            self.photo = rnrImage("cool_guy.png")
         self.img_label = tk.Label(self.char_img_frame, image=self.photo)
         self.img_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
 
