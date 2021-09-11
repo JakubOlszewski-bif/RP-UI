@@ -13,9 +13,9 @@ class stats_cell(tk.Frame):
         self.container_frame = tk.Frame(master=self) #is this even necessary?
         self.container_frame.pack(fill=tk.BOTH)
 
-        self.stat_lab = tk.Label(master=self.container_frame, text=self.stat_name)
+        self.stat_lab = tk.Label(master=self.container_frame, text=f"{self.stat_name}: ", width = 10)
         self.stat_val_box = Spinbox(master=self.container_frame, from_=0, to=99, textvariable=self.spin_val,
-                                    font=Font(family= 'Courier', size = 13), width=5, justify=tk.CENTER)
+                                    font=Font(family= 'Courier', size = 13), width=3, justify=tk.CENTER)
         self.stat_lab.pack(side=tk.LEFT)
         self.stat_val_box.pack(side=tk.RIGHT)
 
