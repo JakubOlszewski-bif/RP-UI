@@ -1,5 +1,8 @@
+from os import makedirs, stat
 import tkinter as tk
 from tkinter.ttk import Notebook
+
+from stats_cell import stats_cell
 
 from PIL import Image, ImageTk
 
@@ -9,6 +12,9 @@ MAIN_WIN_WIDTH = 1000
 
 CHAR_IMG_SIZE = 420
 
+#tmp
+STAT_LIST = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
+STAT_VALS = [5,5,5,5,5,5]
 
 def rnrImage(path: str) -> ImageTk.PhotoImage:
     """Read and Resize Image from path"""
@@ -62,7 +68,7 @@ class MainApplication(tk.Frame):
 
         ### Temporary image
         try:
-            self.photo = rnrImage("char_images/char_elff.png") 
+            self.photo = rnrImage("char_images/char_elfff.png") 
         except FileNotFoundError:
             self.photo = rnrImage("char_images/cool_guy.png")
         self.img_label = tk.Label(self.char_img_frame, image=self.photo)
@@ -72,9 +78,20 @@ class MainApplication(tk.Frame):
         self.char_stats_frame = tk.Frame(self.char_frame, bg = "Blue")
         self.char_stats_frame.config(relief='groove',borderwidth="2")
         self.char_stats_frame.place(rely = 0.899, relx=0.5, anchor=tk.CENTER,width=MAIN_WIN_WIDTH*0.43, height=115)
+        
+        ### Stats table
+        cooridates = [(1,1),(2,1),(1,2),(2,2),(1,3),(2,3)]
+        self.stat_wig_cont = []
+        for stat_name,stat_val,xy in zip(STAT_LIST,STAT_VALS, cooridates):
+            w = stats_cell(self.char_stats_frame, stat_name, stat_val)
+            w.grid(row=xy[0], column=xy[1])
+            self.stat_wig_cont.append(w)
 
+
+        """
         self.stats_label = tk.Label(self.char_stats_frame, text= "<stats table here>")
         self.stats_label.place(relx= 0.5, rely = 0.5, anchor=tk.CENTER)
+        """
 
         # Top right frame - randomness center
         self.rand_frame = tk.Frame(self.main_frame, bg = "Yellow")
