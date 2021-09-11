@@ -9,12 +9,13 @@ class stats_cell(tk.Frame):
         self.stat_name = stat_name
         self.spin_val = tk.StringVar(master=self, value=stat_value, name="STAT_SPIN_VAL")
 
-        self.container_frame = tk.Frame(master=self)
+        self.container_frame = tk.Frame(master=self) #is this even necessary?
+        self.container_frame.pack(fill=tk.BOTH)
 
-        self.stat_lab = tk.Label(master=self.container_frame, text=self.stat_name, width=70, height=50)
-        self.stat_val_box = Spinbox(master=self.container_frame, from_=0, to=99, textvariable=self.spin_val, width=70)
-        self.stat_lab.grid(row=1, column=1)
-        self.stat_val_box.grid(row=1,column=2)
+        self.stat_lab = tk.Label(master=self.container_frame, text=self.stat_name)
+        self.stat_val_box = Spinbox(master=self.container_frame, from_=0, to=99, textvariable=self.spin_val)
+        self.stat_lab.pack(side=tk.LEFT)
+        self.stat_val_box.pack(side=tk.RIGHT)
 
     
     def change_stat_value(self, new_stat: int):
